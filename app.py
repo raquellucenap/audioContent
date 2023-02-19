@@ -9,7 +9,7 @@ import pickle
 m3u_filepaths_file = 'playlists/streamlit.m3u8'
 ESSENTIA_ANALYSIS_PATH = 'data/features.csv'
 with open(ESSENTIA_ANALYSIS_PATH,'rb') as f:
-	data = pd.read_csv(f)
+    data = pd.read_csv(f)
 audio_analysis = data
 
 st.dataframe(audio_analysis)
