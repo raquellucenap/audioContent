@@ -15,7 +15,7 @@ audio_analysis = pd.Dataframe(data)
 st.dataframe(audio_analysis)
 st.write('# Audio analysis playlists example')
 st.write(f'Using analysis data from `{ESSENTIA_ANALYSIS_PATH}`.')
-#audio_analysis_styles = audio_analysis.columns
+audio_analysis_styles = audio_analysis["style"].unique()
 st.write('Loaded audio analysis for', len(audio_analysis), 'tracks.')
 
 st.write('## 🔍 Select')
