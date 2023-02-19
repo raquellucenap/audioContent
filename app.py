@@ -15,7 +15,7 @@ audio_analysis = data
 st.dataframe(audio_analysis)
 st.write('# Audio analysis playlists example')
 st.write(f'Using analysis data from `{ESSENTIA_ANALYSIS_PATH}`.')
-audio_analysis_styles = audio_analysis["style"].unique()
+#audio_analysis_styles = audio_analysis["style"].unique()
 st.write('Loaded audio analysis for', len(audio_analysis), 'tracks.')
 
 st.write('## 🔍 Select')
@@ -23,9 +23,9 @@ st.write('### By style')
 st.write('Style activation statistics:')
 st.write(audio_analysis.describe())
 
-style_select = st.multiselect('Select by style activations:', audio_analysis_styles)
-if style_select:
-    st.write('Select tracks with `{style_select}` styles.')
+#style_select = st.multiselect('Select by style activations:', audio_analysis_styles)
+#if style_select:
+    #st.write('Select tracks with `{style_select}` styles.')
 
 st.write('## Select Tempo⏲️')
 tempo_select_range = st.slider('Select a range', 60,185, (60,185))
@@ -64,8 +64,8 @@ if st.button("RUN"):
         result = result.loc[result["instrumentalvoice"] == "voice"]
     else:
         result = result.loc[result["instrumentalvoice"] == "instrumental"]
-    if style_select:
-        result = result.loc[result["style"].isin(style_select)]
+    #if style_select:
+        #result = result.loc[result["style"].isin(style_select)]
     audio_analysis = result
     mp3s = list(audio_analysis.index)
     if max_tracks:
