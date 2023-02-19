@@ -57,18 +57,16 @@ shuffle = st.checkbox('Random shuffle')
 if st.button("RUN"):
     st.write('## 🔊 Results')
     result=audio_analysis.loc[(audio_analysis['tempo'] >= tempo_select_range[0]) & (audio_analysis['tempo'] <= tempo_select_range[1])]
-	result=result.loc[(result['danceability'] >= danceability_select_range[0]) & (result['danceability'] <= danceability_select_range[1])]
-	result = result.loc[(result["arousal"] >= arousal_select_range[0]) & (result["arousal"] <= arousal_select_range[1])]
-	result = result.loc[(result["valence"] >= valence_select_range[0]) & (result["valence"] <= valence_select_range[1])]
-	if vi_checkbox:
-	  result = result.loc[result["instrumentalvoice"] == "voice"]
-	else:
-	  result = result.loc[result["instrumentalvoice"] == "instrumental"]
-	if style_select:
-	  result = result4.loc[result4["style"].isin(style_select)]
-
-	result.head()
-	audio_analysis = result
+    result=result.loc[(result['danceability'] >= danceability_select_range[0]) & (result['danceability'] <= danceability_select_range[1])]
+    result = result.loc[(result["arousal"] >= arousal_select_range[0]) & (result["arousal"] <= arousal_select_range[1])]
+    result = result.loc[(result["valence"] >= valence_select_range[0]) & (result["valence"] <= valence_select_range[1])]
+    if vi_checkbox:
+        result = result.loc[result["instrumentalvoice"] == "voice"]
+    else:
+        result = result.loc[result["instrumentalvoice"] == "instrumental"]
+    if style_select:
+        result = result.loc[result["style"].isin(style_select)]
+    audio_analysis = result
     mp3s = list(audio_analysis.index)
     if max_tracks:
         mp3s = mp3s[:max_tracks]
