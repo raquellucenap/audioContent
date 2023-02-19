@@ -3,6 +3,7 @@ import random
 import streamlit as st
 import pandas
 import pandas as pd
+import pickle
 
 
 m3u_filepaths_file = 'playlists/streamlit.m3u8'
