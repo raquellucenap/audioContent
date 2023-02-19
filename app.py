@@ -67,7 +67,8 @@ if st.button("RUN"):
     #if style_select:
         #result = result.loc[result["style"].isin(style_select)]
     audio_analysis = result
-    mp3s = list(audio_analysis.index)
+    #mp3s = list(audio_analysis.index)
+    mp3s = list(audio_analysis["audiofile"])
     if max_tracks:
         mp3s = mp3s[:max_tracks]
         st.write('Using top', len(mp3s), 'tracks from the results.')
