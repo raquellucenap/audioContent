@@ -20,7 +20,7 @@ m3u_filepaths_file = 'playlists/streamlit.m3u8'
 with open('data/features.csv','rb') as f1:
 	data1 = pd.read_csv(f1)
 #audio_analysis = pd.Dataframe(data)
-audio_analysis1 = pd.Dataframe(data1)
+audio_analysis1 = pd.DataFrame(data1)
 
 #st.dataframe(audio_analysis)
 st.dataframe(audio_analysis1)
