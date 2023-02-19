@@ -7,28 +7,15 @@ import pickle
 
 
 m3u_filepaths_file = 'playlists/streamlit.m3u8'
-#ESSENTIA_ANALYSIS_PATH = 'data/features.jsonl.pickle'
+ESSENTIA_ANALYSIS_PATH = 'data/features.csv'
+with open(ESSENTIA_ANALYSIS_PATH,'rb') as f:
+	data = pd.read_csv(f)
+audio_analysis = pd.Dataframe(data)
 
-
-#def load_essentia_analysis():
-    #return pandas.read_pickle(ESSENTIA_ANALYSIS_PATH)
-
-#with open('data/features.jsonl.pickle','rb') as f:
-#	data = pickle.load(f)
-#audio_analysis = pd.Dataframe(data)
-#st.dataframe(audio_analysis)
-with open('data/features.csv','rb') as f1:
-	data1 = pd.read_csv(f1)
-#audio_analysis = pd.Dataframe(data)
-audio_analysis1 = pd.DataFrame(data1)
-
-#st.dataframe(audio_analysis)
-st.dataframe(audio_analysis1)
-audio_analysis = audio_analysis1
+st.dataframe(audio_analysis)
 st.write('# Audio analysis playlists example')
 st.write(f'Using analysis data from `{ESSENTIA_ANALYSIS_PATH}`.')
-audio_analysis = load_essentia_analysis()
-audio_analysis_styles = audio_analysis.columns
+#audio_analysis_styles = audio_analysis.columns
 st.write('Loaded audio analysis for', len(audio_analysis), 'tracks.')
 
 st.write('## 🔍 Select')
@@ -38,14 +25,30 @@ st.write(audio_analysis.describe())
 
 style_select = st.multiselect('Select by style activations:', audio_analysis_styles)
 if style_select:
-    # Show the distribution of activation values for the selected styles.
-    st.write(audio_analysis[style_select].describe())
+    st.write('Select tracks with '{style_select}' styles.')
 
-    style_select_str = ', '.join(style_select)
-    style_select_range = st.slider(f'Select tracks with `{style_select_str}` activations within range:', value=[0.5, 1.])
+st.write('## Select Tempo⏲️')
+tempo_select_range = st.slider('Select a range', 60,185, (60,185))
+st.write("You selected the range:", tempo_select_range)
 
-st.write('## 🔝 Rank')
-style_rank = st.multiselect('Rank by style activations (multiplies activations for selected styles):', audio_analysis_styles, [])
+st.write('## Select Voice or instrument')
+vi_checkbox = st.checkbox('Select voice!')
+if vi_checkbox:
+    st.write('Voice is selected!🎤👄')
+else:
+    st.write('Instrument is selected!🎻🎺')
+    
+st.write('## Select Danceability🕺🏻💃🪩')
+danceability_select_range = st.slider('Select a range', 0,3, (0,3))
+st.write("You selected the range:", danceability_select_range)
+
+st.write('## Select Arousal')
+arousal_select_range = st.slider('Select a range', 1,9, (1,9))
+st.write("You selected the range:", arousal_select_range)
+
+st.write('## Select valence')
+valence_select_range = st.slider('Select a range', 1,8, (1,8))
+st.write("You selected the range:", valence_select_range)
 
 st.write('## 🔀 Post-process')
 max_tracks = st.number_input('Maximum number of tracks (0 for all):', value=0)
@@ -53,6 +56,19 @@ shuffle = st.checkbox('Random shuffle')
 
 if st.button("RUN"):
     st.write('## 🔊 Results')
+    result=audio_analysis.loc[(audio_analysis['tempo'] >= tempo_select_range[0]) & (audio_analysis['tempo'] <= tempo_select_range[1])]
+	result=result.loc[(result['danceability'] >= danceability_select_range[0]) & (result['danceability'] <= danceability_select_range[1])]
+	result = result.loc[(result["arousal"] >= arousal_select_range[0]) & (result["arousal"] <= arousal_select_range[1])]
+	result = result.loc[(result["valence"] >= valence_select_range[0]) & (result["valence"] <= valence_select_range[1])]
+	if vi_checkbox:
+	  result = result.loc[result["instrumentalvoice"] == "voice"]
+	else:
+	  result = result.loc[result["instrumentalvoice"] == "instrumental"]
+	if style_select:
+	  result = result4.loc[result4["style"].isin(style_select)]
+
+	result.head()
+	audio_analysis = result
     mp3s = list(audio_analysis.index)
     if max_tracks:
         mp3s = mp3s[:max_tracks]
