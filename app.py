@@ -5,7 +5,7 @@ import pandas
 
 
 m3u_filepaths_file = 'playlists/streamlit.m3u8'
-ESSENTIA_ANALYSIS_PATH = 'data/features.pkl'
+ESSENTIA_ANALYSIS_PATH = 'data/features.jsonl.pickle'
 
 
 def load_essentia_analysis():
