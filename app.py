@@ -2,6 +2,7 @@ import os.path
 import random
 import streamlit as st
 import pandas
+import pandas as pd
 
 
 m3u_filepaths_file = 'playlists/streamlit.m3u8'
@@ -11,6 +12,17 @@ ESSENTIA_ANALYSIS_PATH = 'data/features.jsonl.pickle'
 def load_essentia_analysis():
     return pandas.read_pickle(ESSENTIA_ANALYSIS_PATH)
 
+with open('data/features.json.pickle','rb') as f:
+	data = pickle.load(f)
+audio_analysis = pd.Dataframe(data)
+st.dataframe(audio_analysis)
+with open('data/features.csv','rb') as f1:
+	data1 = pd.read_cav.load(f1)
+audio_analysis = pd.Dataframe(data)
+audio_analysis1 = pd.Dataframe(data1)
+
+st.dataframe(audio_analysis)
+st.dataframe(audio_analysis1)
 
 st.write('# Audio analysis playlists example')
 st.write(f'Using analysis data from `{ESSENTIA_ANALYSIS_PATH}`.')
@@ -41,33 +53,6 @@ shuffle = st.checkbox('Random shuffle')
 if st.button("RUN"):
     st.write('## 🔊 Results')
     mp3s = list(audio_analysis.index)
-
-    if style_select:
-        audio_analysis_query = audio_analysis.loc[mp3s][style_select]
-
-        #for style in style_select:
-        #    fig, ax = plt.subplots()
-        #    ax.hist(audio_analysis_query[style], bins=100)
-        #    st.pyplot(fig)
-
-        result = audio_analysis_query
-        for style in style_select:
-            result = result.loc[result[style] >= style_select_range[0]]
-        st.write(result)
-        mp3s = result.index
-
-    if style_rank:
-        audio_analysis_query = audio_analysis.loc[mp3s][style_rank]
-        audio_analysis_query['RANK'] = audio_analysis_query[style_rank[0]]
-        for style in style_rank[1:]:
-            audio_analysis_query['RANK'] *= audio_analysis_query[style]
-        ranked = audio_analysis_query.sort_values(['RANK'], ascending=[False])
-        ranked = ranked[['RANK'] + style_rank]
-        mp3s = list(ranked.index)
-
-        st.write('Applied ranking by audio style predictions.')
-        st.write(ranked)
-
     if max_tracks:
         mp3s = mp3s[:max_tracks]
         st.write('Using top', len(mp3s), 'tracks from the results.')
