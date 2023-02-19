@@ -25,7 +25,7 @@ st.write(audio_analysis.describe())
 
 style_select = st.multiselect('Select by style activations:', audio_analysis_styles)
 if style_select:
-    st.write('Select tracks with '{style_select}' styles.')
+    st.write('Select tracks with `{style_select}` styles.')
 
 st.write('## Select Tempo⏲️')
 tempo_select_range = st.slider('Select a range', 60,185, (60,185))
