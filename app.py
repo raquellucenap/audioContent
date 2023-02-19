@@ -7,24 +7,24 @@ import pickle
 
 
 m3u_filepaths_file = 'playlists/streamlit.m3u8'
-ESSENTIA_ANALYSIS_PATH = 'data/features.jsonl.pickle'
+#ESSENTIA_ANALYSIS_PATH = 'data/features.jsonl.pickle'
 
 
-def load_essentia_analysis():
-    return pandas.read_pickle(ESSENTIA_ANALYSIS_PATH)
+#def load_essentia_analysis():
+    #return pandas.read_pickle(ESSENTIA_ANALYSIS_PATH)
 
-with open('data/features.jsonl.pickle','rb') as f:
-	data = pickle.load(f)
-audio_analysis = pd.Dataframe(data)
-st.dataframe(audio_analysis)
+#with open('data/features.jsonl.pickle','rb') as f:
+#	data = pickle.load(f)
+#audio_analysis = pd.Dataframe(data)
+#st.dataframe(audio_analysis)
 with open('data/features.csv','rb') as f1:
-	data1 = pd.read_cav.load(f1)
-audio_analysis = pd.Dataframe(data)
+	data1 = pd.read_csv(f1)
+#audio_analysis = pd.Dataframe(data)
 audio_analysis1 = pd.Dataframe(data1)
 
-st.dataframe(audio_analysis)
+#st.dataframe(audio_analysis)
 st.dataframe(audio_analysis1)
-
+audio_analysis = audio_analysis1
 st.write('# Audio analysis playlists example')
 st.write(f'Using analysis data from `{ESSENTIA_ANALYSIS_PATH}`.')
 audio_analysis = load_essentia_analysis()
