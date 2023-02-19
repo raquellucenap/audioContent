@@ -12,7 +12,7 @@ ESSENTIA_ANALYSIS_PATH = 'data/features.jsonl.pickle'
 def load_essentia_analysis():
     return pandas.read_pickle(ESSENTIA_ANALYSIS_PATH)
 
-with open('data/features.json.pickle','rb') as f:
+with open('data/features.jsonl.pickle','rb') as f:
 	data = pickle.load(f)
 audio_analysis = pd.Dataframe(data)
 st.dataframe(audio_analysis)
