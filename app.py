@@ -81,6 +81,7 @@ if st.button("RUN"):
         # Modify relative mp3 paths to make them accessible from the playlist folder.
         #mp3_paths = [os.path.join('..', mp3) for mp3 in mp3s]
         mp3_paths = [mp3 for mp3 in mp3s]
+        st.write(mp3_paths)
         f.write('\n'.join(mp3_paths))
         st.write(f'Stored M3U playlist (local filepaths) to `{m3u_filepaths_file}`.')
 
