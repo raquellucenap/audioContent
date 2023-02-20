@@ -6,8 +6,8 @@ import pandas as pd
 import pickle
 
 
-m3u_filepaths_file = 'playlists/streamlit.m3u8'
-ESSENTIA_ANALYSIS_PATH = 'data/features.csv'
+m3u_filepaths_file = 'playlist/streamlit.m3u8'
+ESSENTIA_ANALYSIS_PATH = 'data/featuresAll.csv'
 with open(ESSENTIA_ANALYSIS_PATH,'rb') as f:
     data = pd.read_csv(f)
 audio_analysis = data
@@ -15,7 +15,7 @@ audio_analysis = data
 st.dataframe(audio_analysis)
 st.write('# Audio analysis playlists example')
 st.write(f'Using analysis data from `{ESSENTIA_ANALYSIS_PATH}`.')
-#audio_analysis_styles = audio_analysis["style"].unique()
+audio_analysis_styles = audio_analysis["style"].unique()
 st.write('Loaded audio analysis for', len(audio_analysis), 'tracks.')
 
 st.write('## 🔍 Select')
@@ -23,10 +23,16 @@ st.write('### By style')
 st.write('Style activation statistics:')
 st.write(audio_analysis.describe())
 
-#style_select = st.multiselect('Select by style activations:', audio_analysis_styles)
-#if style_select:
-    #st.write('Select tracks with `{style_select}` styles.')
-
+style_select = st.multiselect('Select by style:', audio_analysis_styles)
+if style_select:
+    st.write('Select tracks with `{style_select}` styles.')
+    
+style_select_all = st.multiselect('Select by style activations:', audio_analysis_styles)
+if style_select_all:
+    st.write('Select tracks by style activations `{style_select_all}` styles.')
+    style_select_str = ', '.join(style_select)
+    style_select_range = st.slider(f'Select tracks with `{style_select_str}` activations within range:', value=[0.5, 1.])
+    
 st.write('## Select Tempo⏲️')
 tempo_select_range = st.slider('Select a range', 60,185, (60,185))
 st.write("You selected the range:", tempo_select_range)
@@ -64,7 +70,14 @@ if st.button("RUN"):
         result = result.loc[result["instrumentalvoice"] == "voice"]
     else:
         result = result.loc[result["instrumentalvoice"] == "instrumental"]
-    #if style_select:
+    if style_select:
+        result = result.loc[result["style"].isin(style_select)]
+    if style_select_all:
+        audio_analysis_query = result.loc[result.index][style_select_all]
+        result1 = audio_analysis_query
+        for style_all in style_select_all:
+            result1 = result1.loc[result1[style_all]>=style_select_range[0]]
+        st.write(result1)
         #result = result.loc[result["style"].isin(style_select)]
     audio_analysis = result
     #mp3s = list(audio_analysis.index)
