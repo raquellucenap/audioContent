@@ -6,7 +6,7 @@ import pandas as pd
 import pickle
 
 
-m3u_filepaths_file = 'playlist/streamlit.m3u8'
+m3u_filepaths_file = 'playlists/streamlit.m3u8'
 ESSENTIA_ANALYSIS_PATH = 'data/featuresAllAgain.csv'
 with open(ESSENTIA_ANALYSIS_PATH,'rb') as f:
     data = pd.read_csv(f)
