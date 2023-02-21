@@ -93,7 +93,7 @@ if st.button("RUN"):
     # Store the M3U8 playlist.
     with open(m3u_filepaths_file, 'w') as f:
         # Modify relative mp3 paths to make them accessible from the playlist folder.
-        #mp3_paths = [os.path.join('..', mp3) for mp3 in mp3s]
+        #mp3_paths = [os.path.join('/C:/Users/SMPC001/Downloads/MusAV/audio_chunks', mp3) for mp3 in mp3s]
         mp3_paths = [mp3 for mp3 in mp3s]
         st.write(mp3_paths)
         f.write('\n'.join(mp3_paths))
